@@ -26,6 +26,8 @@ $(function() {
         _colors = [
           'orange',
           'green',
+          'orange',
+          'green',
           'blue',
           'purple',
           'darkred',
@@ -38,6 +40,19 @@ $(function() {
         
     function _assignColor() {
         return _colors[_colorIdx++%10];
+    }
+
+    var _iconIdx = 0,
+        _icons = [
+            'user',
+            'dollar',
+            'user',
+            'dollar',
+            'user',
+            'dollar'
+        ]
+    function _assignIcon() {
+        return _icons[_iconIdx++%10];
     }
 
 	// Test Coords (DEBUG)
@@ -71,8 +86,8 @@ $(function() {
     	tickLen: 500,
     	
         //todo, changes marker color
-        //staleTime: 10*60*1000, // 10 minutes
-    	//fadeMarkersWhenStale: true, //hide marker when stale
+        staleTime: 5*60*1000, // 5 minutes
+    	fadeMarkersWhenStale: true, //hide marker when stale
 
 
         // layer and marker options
@@ -96,13 +111,12 @@ $(function() {
         
         marker: function(featureData, latlng){
             var color = _assignColor();
-
-            //money, dollar
-
+            var icon = _assignIcon();
+            
             return {
                 icon: L.AwesomeMarkers.icon({
                     prefix: 'fa',
-                    icon: 'user', //bullseye, male, map-pin, star, bullseye, shopping-basket, user
+                    icon: icon, //bullseye, male, map-pin, star, bullseye, shopping-basket, user
                     markerColor: color
                 })
 
@@ -124,8 +138,9 @@ $(function() {
     };
     
     //Setup DataSet
-    var dataSet = teas031217; // tracks only
+    //var dataSet = teas031217; // tracks only
     //var dataSet = [teas031217,pos031217];
+    var dataSet = [teas031217,posSample]; //sample data set
 
     // Initialize playback
     var playback = new L.Playback(map, dataSet, null, playbackOptions);
